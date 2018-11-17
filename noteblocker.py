@@ -111,114 +111,117 @@ class MidiTranslationManager:
     }
 
     midi = {
-        "0,1,2,3,4,5,6": "piano",
-        "7,8": "guitar",
-        "9,10,11,12": "chime",
-        "13,14": "xylophone",
-        "15": "bell",
-        "16": "guitar",
-        "25,26,27,28,29,30,31,21": "guitar",
-        "33,34,35,36": "bass",
-        "37,38": "basedrum",
-        "39,40": "bass",
-        "113": "bell",
-        "114": "hat",
-        "115": "basedrum",
-        "116": "hat",
-        "117": "snare",
-        "118": "basedrum",
-        "119": "snare"
+        {"0", "1", "2", "3", "4", "5", "6"}: "piano",
+        {"7", "8"}: "guitar",
+        {"9", "10", "11", "12"}: "chime",
+        {"13", "14"}: "xylophone",
+        {"15"}: "bell",
+        {"16"}: "guitar",
+        {"21","25", "26", "27", "28", "29", "30", "31"}: "guitar",
+        {"33", "34", "35", "36"}: "bass",
+        {"37", "38"}: "basedrum",
+        {"39", "40"}: "bass",
+        {"113"}: "bell",
+        {"114"}: "hat",
+        {"115"}: "basedrum",
+        {"116"}: "hat",
+        {"117"}: "snare",
+        {"118"}: "basedrum",
+        {"119"}: "snare"
     }
 
     channel10 = {
-        "27": "basedrum",
-        "28": "snare",
-        "29": "hat",
-        "30": "snare",
-        "31": "hat",
-        "32": "hat",
-        "33": "hat",
-        "34": "bell",
-        "35": "basedrum",
-        "36": "hat",
-        "37": "hat",
-        "38": "snare",
-        "39": "hat",
-        "40": "snare",
-        "41": "basedrum",
-        "42": "hat",
-        "43": "basedrum",
-        "44": "snare",
-        "45": "basedrum",
-        "46": "hat",
-        "47": "basedrum",
-        "48": "basedrum",
-        "49": "snare",
-        "50": "snare",
-        "51": "snare",
-        "52": "hat",
-        "53": "bell",
-        "54": "snare",
-        "55": "snare",
-        "56": "bell",
-        "57": "snare",
-        "58": "snare",
-        "59": "snare",
-        "60": "snare",
-        "61": "snare",
-        "62": "snare",
-        "63": "snare",
-        "64": "snare",
-        "65": "hat",
-        "66": "hat",
-        "67": "hat",
-        "67": "hat",
-        "68": "hat",
-        "69": "hat",
-        "70": "hat",
-        "71": "bell",
-        "72": "bell",
-        "73": "hat",
-        "74": "basedrum",
-        "75": "hat",
-        "76": "hat",
-        "77": "hat",
-        "78": "snare",
-        "79": "snare",
-        "80": "bell",
-        "81": "bell",
-        "82": "hat",
-        "83": "snare",
-        "84": "chime",
-        "85": "hat",
-        "86": "basedrum",
-        "87": "basedrum"
+        {"27"}: "basedrum",
+        {"28"}: "snare",
+        {"29"}: "hat",
+        {"30"}: "snare",
+        {"31"}: "hat",
+        {"32"}: "hat",
+        {"33"}: "hat",
+        {"34"}: "bell",
+        {"35"}: "basedrum",
+        {"36"}: "hat",
+        {"37"}: "hat",
+        {"38"}: "snare",
+        {"39"}: "hat",
+        {"40"}: "snare",
+        {"41"}: "basedrum",
+        {"42"}: "hat",
+        {"43"}: "basedrum",
+        {"44"}: "snare",
+        {"45"}: "basedrum",
+        {"46"}: "hat",
+        {"47"}: "basedrum",
+        {"48"}: "basedrum",
+        {"49"}: "snare",
+        {"50"}: "snare",
+        {"51"}: "snare",
+        {"52"}: "hat",
+        {"53"}: "bell",
+        {"54"}: "snare",
+        {"55"}: "snare",
+        {"56"}: "bell",
+        {"57"}: "snare",
+        {"58"}: "snare",
+        {"59"}: "snare",
+        {"60"}: "snare",
+        {"61"}: "snare",
+        {"62"}: "snare",
+        {"63"}: "snare",
+        {"64"}: "snare",
+        {"65"}: "hat",
+        {"66"}: "hat",
+        {"67"}: "hat",
+        {"68"}: "hat",
+        {"69"}: "hat",
+        {"70"}: "hat",
+        {"71"}: "bell",
+        {"72"}: "bell",
+        {"73"}: "hat",
+        {"74"}: "basedrum",
+        {"75"}: "hat",
+        {"76"}: "hat",
+        {"77"}: "hat",
+        {"78"}: "snare",
+        {"79"}: "snare",
+        {"80"}: "bell",
+        {"81"}: "bell",
+        {"82"}: "hat",
+        {"83"}: "snare",
+        {"84"}: "chime",
+        {"85"}: "hat",
+        {"86"}: "basedrum",
+        {"87"}: "basedrum"
     }
 
-    def get_percussion(instrument):
+    @classmethod
+    def get_percussion(cls, instrument):
         instrument = str(instrument)
-        for x in MidiTranslationManager.channel10:
-            if x == instrument or ("," + instrument + ",") in x or x.startswith(instrument + ",") or x.endswith("," + instrument):
-                return MidiTranslationManager.channel10[x]
+        for x in cls.channel10:
+            if instrument in x:
+                return cls.channel10[x]
         return "piano"
 
-    def get_instrument(instrument):
+    @classmethod
+    def get_instrument(cls, instrument):
         instrument = str(instrument)
-        for x in MidiTranslationManager.midi:
-            if x == instrument or ("," + instrument + ",") in x or x.startswith(instrument + ",") or x.endswith("," + instrument):
-                return MidiTranslationManager.midi[x]
+        for x in cls.midi:
+            if instrument in x:
+                return cls.midi[x]
         return "piano"
 
-    def get_block(instrument):
-        return MidiTranslationManager.blocks[instrument]
+    @classmethod
+    def get_block(cls, instrument):
+        return cls.blocks[instrument]
 
-
-    def note_block_pitch(midipitch):
+    @classmethod
+    def note_block_pitch(cls, midipitch):
         pitch = midipitch - 54
-        while pitch < 0:
-            pitch += 12
-        while pitch > 24:
-            pitch -= 12
+        if pitch < 0:
+            pitch = pitch % 12
+        if pitch > 24:
+            pitch = 12 + (pitch % 12)
+            pitch = 24 if pitch == 12 else pitch
         return pitch
 
 class NoteBlockMessage:
@@ -239,8 +242,7 @@ class NoteBlockConverter:
         self.channel10 = True
 
     def extract_messages(self):
-        for message in self.midi:
-            self.midi_messages.append(message)
+        self.midi_messages.extend(self.midi)
 
     def generate_noteblock_objects(self):
         channel_instrument = {}
@@ -311,7 +313,7 @@ class NoteBlockStructureGenerator:
         }
 
     def generate(self):
-        biggest_frame = max([len([y for y in x if y.note != None]) for x in self.messages])
+        biggest_frame = max([len([y for y in x if y.note != None]) for x in self.messages], key=len)
         lanes = [NoteBlockLane() for x in range(0, math.ceil(biggest_frame / 3))]
         time = -0.1
         current_items = [item for sublist in self.messages.copy() for item in sublist]
@@ -672,5 +674,6 @@ class NoteblockerCI:
         self.ready_server()
         self.console()
 
-a = NoteblockerCI()
-a.run()
+if __name__ == "__main__":
+    a = NoteblockerCI()
+    a.run()
